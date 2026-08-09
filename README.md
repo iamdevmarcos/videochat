@@ -1,32 +1,32 @@
 # Video Chat
 
-Video call 1:1 no browser — UI estilo Google Meet, WebRTC via PeerJS.
+1:1 browser video calls with a Google Meet–style UI, powered by WebRTC via PeerJS.
 
 Built by [Marcos Mendes](https://www.instagram.com/mendes.tsx/).
 
 ## Features
 
-- Chamada 1:1 com link compartilhável (`/?room=vc-xxxxxxxx`)
-- Entrar com código ou URL na tela inicial
-- Layouts: spotlight (PiP) ou side-by-side 50/50
-- Controles: mic, câmera, volume remoto, fullscreen
-- Video fit flutuante (Fill / Fit) no hover do vídeo
-- Seleção de câmera e microfone (persiste no `localStorage`)
-- Mirror da câmera local e opção de ocultar self-view
-- Desconexão limpa quando alguém sai (sem frame travado)
-- Pronto para testar via Ngrok em dois devices
+- 1:1 calls with a shareable link (`/?room=vc-xxxxxxxx`)
+- Join with a room code or full URL from the home screen
+- Layouts: spotlight (PiP) or side-by-side 50/50
+- Controls: mic, camera, remote volume, fullscreen
+- Floating video fit toggle (Fill / Fit) on hover
+- Camera and microphone selection (persisted in `localStorage`)
+- Local camera mirror and optional self-view hide
+- Clean disconnect handling when someone leaves (no frozen frames)
+- Ngrok-ready for testing across two devices
 
 ## Stack
 
 - Vite + TypeScript
-- PeerJS (PeerServer público)
+- PeerJS (public PeerServer)
 - WebRTC / `getUserMedia`
 
-## Requisitos
+## Requirements
 
 - Node.js 18+
-- Chrome, Firefox ou Safari
-- [Ngrok](https://ngrok.com/) para testar fora do localhost
+- Chrome, Firefox, or Safari
+- [Ngrok](https://ngrok.com/) to test outside localhost
 
 ## Setup
 
@@ -35,50 +35,50 @@ npm install
 npm run dev
 ```
 
-App em `http://localhost:5173` (`host: true`, hosts Ngrok liberados).
+Runs at `http://localhost:5173` with `host: true` and Ngrok hosts allowed in Vite.
 
-## Teste com Ngrok
+## Testing with Ngrok
 
 ```bash
 npm run dev
-# outro terminal
+# in another terminal
 ngrok http 5173
 ```
 
-1. Abra a URL HTTPS do Ngrok no **Browser A**
-2. Clique em **New meeting** → permita câmera/mic → **Copy link**
-3. No **Browser B** (ou outro device), cole o link ou use **Join** com o código
-4. Clique em **Join now**
+1. Open the Ngrok HTTPS URL in **Browser A**
+2. Click **New meeting** → allow camera/mic → **Copy link**
+3. On **Browser B** (or another device), paste the link or use **Join** with the room code
+4. Click **Join now**
 
-> Use dois perfis / janela anônima para simular dois usuários na mesma máquina.  
-> HTTPS é obrigatório para mídia fora de `localhost`.
+> Use two browser profiles or an incognito window to simulate two users on the same machine.  
+> HTTPS is required for media access outside `localhost`.
 
 ## Scripts
 
 ```bash
-npm run dev      # desenvolvimento
-npm run build    # typecheck + build
-npm run preview  # preview do build
+npm run dev      # development
+npm run build    # typecheck + production build
+npm run preview  # preview production build
 ```
 
-## Estrutura
+## Project structure
 
 ```
 videochat/
-  inspiration-layout/   # referência visual original
+  inspiration-layout/   # original visual reference
   src/
     peer/               # PeerJS, media, call session
-    ui/                 # shell Meet, layout, settings
+    ui/                 # Meet shell, layout, settings
     utils/              # roomId, clipboard
 ```
 
-## Segurança
+## Security
 
-- `room` validado com `^vc-[a-z0-9]{8}$`
-- `getUserMedia` só após clique do usuário
-- Sem secrets no código
+- Room IDs validated with `^vc-[a-z0-9]{8}$`
+- `getUserMedia` only after explicit user action
+- No secrets in the codebase
 
-## Notas
+## Notes
 
-- Usa o PeerServer público do PeerJS (ok para demo; em produção use um PeerServer próprio).
-- Preferências de layout/devices ficam no `localStorage` do browser.
+- Uses the public PeerJS PeerServer (fine for demos; use your own PeerServer in production).
+- Layout and device preferences are stored in the browser `localStorage`.
